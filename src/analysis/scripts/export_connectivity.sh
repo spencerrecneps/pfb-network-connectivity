@@ -115,7 +115,7 @@ then
         JOB_ID="${2}"
         OUTPUT_DIR="${NB_OUTPUT_DIR}/${JOB_ID}"
         echo "Exporting analysis to ${OUTPUT_DIR}"
-        update_status "EXPORTING" "Exporting results"
+        echo "Exporting results"
         mkdir -p "${OUTPUT_DIR}"
 
         # Export neighborhood_ways as SHP
@@ -165,7 +165,7 @@ then
         if [ -v AWS_STORAGE_BUCKET_NAME ]
         then
           sync  # Probably superfluous, but the s3 command said "file changed while reading" once
-          update_status "EXPORTING" "Uploading results"
+          echo "Uploading results"
           aws s3 cp --quiet --recursive "${OUTPUT_DIR}" \
             "s3://${AWS_STORAGE_BUCKET_NAME}/${PFB_S3_RESULTS_PATH}"
         fi

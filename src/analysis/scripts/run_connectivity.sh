@@ -38,7 +38,7 @@ SCORE_TRANSIT="${SCORE_TRANSIT:-15}"
 # Limit custom output formatting for `time` command
 export TIME="\nTIMING: %C\nTIMING:\t%E elapsed %Kkb mem\n"
 
-update_status "BUILDING" "Building network"
+echo "Building network"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v nb_output_srid="${NB_OUTPUT_SRID}" \
   -f ../connectivity/build_network.sql
@@ -49,7 +49,7 @@ update_status "BUILDING" "Building network"
   -v block_road_min_length="${BLOCK_ROAD_MIN_LENGTH}" \
   -f ../connectivity/census_blocks.sql
 
-update_status "CONNECTIVITY" "Reachable roads high stress"
+echo "Reachable roads high stress"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" -f ../connectivity/reachable_roads_high_stress_prep.sql
 
 /usr/bin/time parallel<<EOF
@@ -65,7 +65,7 @@ EOF
 
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" -f ../connectivity/reachable_roads_high_stress_cleanup.sql
 
-update_status "CONNECTIVITY" "Reachable roads low stress"
+echo "Reachable roads low stress"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -f ../connectivity/reachable_roads_low_stress_prep.sql
 
@@ -83,13 +83,13 @@ EOF
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -f ../connectivity/reachable_roads_low_stress_cleanup.sql
 
-update_status "CONNECTIVITY" "Connected census blocks"
+echo "Connected census blocks"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v nb_max_trip_distance="${NB_MAX_TRIP_DISTANCE}" \
   -v nb_output_srid="${NB_OUTPUT_SRID}" \
   -f ../connectivity/connected_census_blocks.sql
 
-update_status "METRICS" "Access: population"
+echo "Access: population"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v max_score=1 \
   -v step1=0.03 \
@@ -100,7 +100,7 @@ update_status "METRICS" "Access: population"
   -v score3=0.8 \
   -f ../connectivity/access_population.sql
 
-update_status "METRICS" "Access: jobs"
+echo "Access: jobs"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -f ../connectivity/census_block_jobs.sql
 
@@ -114,7 +114,7 @@ update_status "METRICS" "Access: jobs"
   -v score3=0.8 \
   -f ../connectivity/access_jobs.sql
 
-update_status "METRICS" "Destinations"
+echo "Destinations"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v nb_output_srid="${NB_OUTPUT_SRID}" \
   -v cluster_tolerance="${TOLERANCE_COLLEGES}" \
@@ -177,7 +177,7 @@ update_status "METRICS" "Destinations"
   -v cluster_tolerance="${TOLERANCE_UNIVERSITIES}" \
   -f ../connectivity/destinations/universities.sql
 
-update_status "METRICS" "Access: colleges"
+echo "Access: colleges"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v first=0.7 \
   -v second=0 \
@@ -291,7 +291,7 @@ update_status "METRICS" "Access: colleges"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -f ../connectivity/score_inputs.sql
 
-update_status "METRICS" "Overall scores"
+echo "Overall scores"
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v total=${SCORE_TOTAL} \
   -v people=${SCORE_PEOPLE} \

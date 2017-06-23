@@ -5,7 +5,7 @@ function update_status() {
     #    update_status STATUS [step [message]]
 
     echo "Updating job status: $@"
-    /opt/pfb/django/manage.py update_status "${PFB_JOB_ID}" "$@"
+    /opt/pfb/django/manage.py echo "$@"
 }
 
 function update_overall_scores() {

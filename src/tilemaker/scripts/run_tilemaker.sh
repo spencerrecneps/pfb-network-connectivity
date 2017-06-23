@@ -14,7 +14,7 @@ source /opt/pfb/tilemaker/scripts/utils.sh
 function generate_tiles_from_shapefile() {
     TL_SHAPEFILE_NAME="$1"
 
-    update_status "TILING" "Generating tiles for ${TL_SHAPEFILE_NAME}"
+    echo "Generating tiles for ${TL_SHAPEFILE_NAME}"
 
     PFB_TEMPDIR="${NB_TEMPDIR:-$(mktemp -d)}/tilemaker"
     mkdir -p "${PFB_TEMPDIR}"

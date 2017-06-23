@@ -46,9 +46,9 @@ PFB_EXIT_STATUS=$?
 set -e
 
 if [ $PFB_EXIT_STATUS -eq  0 ]; then
-    update_status "EXPORTED" "Finished analysis"
+    echo "Finished analysis"
 else
-    update_status "ERROR" "Failed" "See job logs for more details."
+    echo "Failed" "See job logs for more details."
 fi
 
 # This will exit immediately when there's no pseudo-TTY but provide a shell if there is,

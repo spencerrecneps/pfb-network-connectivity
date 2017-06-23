@@ -103,7 +103,7 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
     else
         NB_STATE_ABBREV="${1,,}"  # force to lower case to match the jobs file download paths
 
-        update_status "IMPORTING" "Importing jobs data"
+        echo "Importing jobs data"
         import_job_data "${NB_STATE_ABBREV}" "main"
         import_job_data "${NB_STATE_ABBREV}" "aux"
     fi

@@ -20,7 +20,7 @@ mkdir -p "${PFB_TEMPDIR}"
 # If given a URL for the shapefile, dowload and unzip it. Overrides PFB_SHPFILE.
 if [ "${PFB_SHPFILE_URL}" ]
 then
-    update_status "IMPORTING" "Downloading shapefile"
+    echo "Downloading shapefile"
     mkdir -p "${PFB_TEMPDIR}/boundary"
     pushd "${PFB_TEMPDIR}/boundary"
     wget -nv "${PFB_SHPFILE_URL}" -O boundary.zip
@@ -33,7 +33,7 @@ fi
 # If given a URL for the OSM file, dowload and unzip it. Overrides PFB_OSM_FILE.
 if [ "${PFB_OSM_FILE_URL}" ]
 then
-    update_status "IMPORTING" "Downloading OSM file"
+    echo "Downloading OSM file"
     mkdir -p "${PFB_TEMPDIR}/osm"
     pushd "${PFB_TEMPDIR}/osm"
     wget -nv "${PFB_OSM_FILE_URL}"

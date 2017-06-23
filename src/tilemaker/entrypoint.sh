@@ -15,7 +15,7 @@ if [ -z "${PFB_JOB_ID}" ]; then
     exit 1
 fi
 
-update_status "TILING" "Exporting tiles"
+echo "Exporting tiles"
 
 set +e
 /opt/pfb/tilemaker/scripts/run_tilemaker.sh
@@ -23,9 +23,9 @@ PFB_EXIT_STATUS=$?
 set -e
 
 if [ $PFB_EXIT_STATUS -eq  0 ]; then
-    update_status "COMPLETE" "Finished exporting tiles"
+    echo "Finished exporting tiles"
 else
-    update_status "ERROR" "Failed" "See job logs for more details."
+    echo "Failed" "See job logs for more details."
 fi
 
 # Drop to a shell if run interactively
