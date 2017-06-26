@@ -101,8 +101,8 @@ echo "Access: population"
   -f ../connectivity/access_population.sql
 
 echo "Access: jobs"
-/usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
-  -f ../connectivity/census_block_jobs.sql
+# /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
+#   -f ../connectivity/census_block_jobs.sql
 
 /usr/bin/time psql -h "${NB_POSTGRESQL_HOST}" -U "${NB_POSTGRESQL_USER}" -d "${NB_POSTGRESQL_DB}" \
   -v max_score=1 \
