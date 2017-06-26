@@ -35,7 +35,7 @@ DELETE FROM neighborhood_census_blocks WHERE ST_Area(geom) < 1000;
 DELETE FROM neighborhood_census_blocks WHERE ST_Area(geom) * 2 / ST_Perimeter(geom) < 15;
 
 UPDATE  neighborhood_census_blocks
-SET     blockid10 = rpad(id::TEXT,15,'0');
+SET     blockid10 = lpad(id::TEXT,15,'0');
 
 
 ------------------------------------------
