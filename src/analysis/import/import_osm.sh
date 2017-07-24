@@ -213,12 +213,12 @@ psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
     -f ../stress/stress_segments_higher_order.sql
 # residential
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=residential -v default_speed=25 -v default_lanes=1 \
+    -v class=residential -v default_speed=30 -v default_lanes=1 \
     -v default_parking=1 -v default_roadway_width=27 \
     -f ../stress/stress_segments_lower_order.sql
 # unclassified
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=unclassified -v default_speed=25 -v default_lanes=1 \
+    -v class=unclassified -v default_speed=30 -v default_lanes=1 \
     -v default_parking=1 -v default_roadway_width=27 \
     -f ../stress/stress_segments_lower_order.sql
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} -f ../stress/stress_living_street.sql
