@@ -14,6 +14,33 @@ NB_OUTPUT_SRID="${NB_OUTPUT_SRID:-2163}"
 NB_SIGCTL_SEARCH_DIST="${NB_SIGCTL_SEARCH_DIST:-25}"    # max search distance for intersection controls
 NB_MAX_TRIP_DISTANCE="${NB_MAX_TRIP_DISTANCE:-2680}"
 NB_BOUNDARY_BUFFER="${NB_BOUNDARY_BUFFER:-$NB_MAX_TRIP_DISTANCE}"
+# set speed limit defaults
+case "${2^^}" in
+    "NY" )
+        NB_PRI_SPEED="${NB_PRI_SPEED:-45}"
+        NB_SEC_SPEED="${NB_SEC_SPEED:-45}"
+        NB_TER_SPEED="${NB_TER_SPEED:-45}"
+        NB_LOC_SPEED="${NB_LOC_SPEED:-45}"
+        ;;
+    "ID" | "KY" | "NH" | "NC" )
+        NB_PRI_SPEED="${NB_PRI_SPEED:-35}"
+        NB_SEC_SPEED="${NB_SEC_SPEED:-35}"
+        NB_TER_SPEED="${NB_TER_SPEED:-35}"
+        NB_LOC_SPEED="${NB_LOC_SPEED:-35}"
+        ;;
+    "CO" | "FL" | "GA" | "MD" | "NM" )
+        NB_PRI_SPEED="${NB_PRI_SPEED:-30}"
+        NB_SEC_SPEED="${NB_SEC_SPEED:-30}"
+        NB_TER_SPEED="${NB_TER_SPEED:-30}"
+        NB_LOC_SPEED="${NB_LOC_SPEED:-30}"
+        ;;
+    *)
+        NB_PRI_SPEED="${NB_PRI_SPEED:-40}"
+        NB_SEC_SPEED="${NB_SEC_SPEED:-40}"
+        NB_TER_SPEED="${NB_TER_SPEED:-30}"
+        NB_LOC_SPEED="${NB_LOC_SPEED:-25}"
+        ;;
+esac
 
 # drop old tables
 echo 'Dropping old tables'
@@ -198,27 +225,27 @@ echo 'Calculating stress'
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} -f ../stress/stress_motorway-trunk.sql
 # primary
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=primary -v default_speed=40 -v default_lanes=2 \
+    -v class=primary -v default_speed=${NB_PRI_SPEED} -v default_lanes=2 \
     -v default_parking=1 -v default_parking_width=8 -v default_facility_width=5 \
     -f ../stress/stress_segments_higher_order.sql
 # secondary
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=secondary -v default_speed=40 -v default_lanes=2 \
+    -v class=secondary -v default_speed=${NB_SEC_SPEED} -v default_lanes=2 \
     -v default_parking=1 -v default_parking_width=8 -v default_facility_width=5 \
     -f ../stress/stress_segments_higher_order.sql
 # tertiary
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=tertiary -v default_speed=30 -v default_lanes=1 \
+    -v class=tertiary -v default_speed=${NB_TER_SPEED} -v default_lanes=1 \
     -v default_parking=1 -v default_parking_width=8 -v default_facility_width=5 \
     -f ../stress/stress_segments_higher_order.sql
 # residential
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=residential -v default_speed=25 -v default_lanes=1 \
+    -v class=residential -v default_speed=${NB_LOC_SPEED} -v default_lanes=1 \
     -v default_parking=1 -v default_roadway_width=27 \
     -f ../stress/stress_segments_lower_order.sql
 # unclassified
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v class=unclassified -v default_speed=25 -v default_lanes=1 \
+    -v class=unclassified -v default_speed=${NB_LOC_SPEED} -v default_lanes=1 \
     -v default_parking=1 -v default_roadway_width=27 \
     -f ../stress/stress_segments_lower_order.sql
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} -f ../stress/stress_living_street.sql
@@ -230,15 +257,15 @@ psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} -f .
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} -f ../stress/stress_secondary_ints.sql
 # tertiary intersections
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v primary_speed=40 \
-    -v secondary_speed=40 \
+    -v primary_speed=${NB_PRI_SPEED} \
+    -v secondary_speed=${NB_SEC_SPEED} \
     -v primary_lanes=2 \
     -v secondary_lanes=2 \
     -f ../stress/stress_tertiary_ints.sql
 psql -h $NB_POSTGRESQL_HOST -U ${NB_POSTGRESQL_USER} -d ${NB_POSTGRESQL_DB} \
-    -v primary_speed=40 \
-    -v secondary_speed=40 \
-    -v tertiary_speed=30 \
+    -v primary_speed=${NB_PRI_SPEED} \
+    -v secondary_speed=${NB_SEC_SPEED} \
+    -v tertiary_speed=${NB_TER_SPEED} \
     -v primary_lanes=2 \
     -v secondary_lanes=2 \
     -v tertiary_lanes=1 \
