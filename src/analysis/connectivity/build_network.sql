@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS received.neighborhood_ways_net_link;
 CREATE TABLE received.neighborhood_ways_net_vert (
     vert_id SERIAL PRIMARY KEY,
     road_id INTEGER,
+    blockid10 VARCHAR(15),
     vert_cost INTEGER,
     geom geometry(point,:nb_output_srid)
 );
@@ -18,6 +19,7 @@ CREATE TABLE received.neighborhood_ways_net_vert (
 CREATE TABLE received.neighborhood_ways_net_link (
     link_id SERIAL PRIMARY KEY,
     int_id INTEGER,
+    blockid10 VARCHAR(15),
     turn_angle INTEGER,
     int_crossing BOOLEAN,
     int_stress INTEGER,
@@ -353,3 +355,68 @@ SET     link_stress = GREATEST(source_stress,int_stress,target_stress);
 --------------
 UPDATE  received.neighborhood_ways_net_link
 SET     link_cost = ROUND((source_road_length + target_road_length) / 2);
+
+--
+-- add nodes and edges for each block and connect to surrounding nodes
+--
+
+-- drop indexes
+DROP INDEX sidx_neighborhood_ways_net_vert_geom;
+DROP INDEX idx_neighborhood_ways_net_vert_roadid;
+DROP INDEX idx_neighborhood_ways_net_vert_road_id;
+DROP INDEX idx_neighborhood_ways_net_link_int_id;
+DROP INDEX idx_neighborhood_ways_net_link_src_trgt;
+DROP INDEX idx_neighborhood_ways_net_link_src_rdid;
+DROP INDEX idx_neighborhood_ways_net_link_tgt_rdid;
+
+-- add verts
+INSERT INTO received.neighborhood_ways_net_vert (blockid10, geom, vert_cost)
+SELECT  b.blockid10,
+        ST_Centroid(b.geom),
+        0
+FROM    neighborhood_census_blocks b;
+
+-- recreate indexes
+CREATE INDEX sidx_neighborhood_ways_net_vert_geom ON received.neighborhood_ways_net_vert USING gist (geom);
+CREATE INDEX idx_neighborhood_ways_net_vert_roadid ON received.neighborhood_ways_net_vert (road_id);
+CREATE INDEX idx_neighborhood_ways_net_vert_blockid10 ON received.neighborhood_ways_net_vert (blockid10);
+ANALYZE received.neighborhood_ways_net_vert;
+
+-- add links
+INSERT INTO received.neighborhood_ways_net_link (
+    blockid10,source_vert,target_vert,link_cost,link_stress,geom
+)
+SELECT  b.blockid10,
+        v1.vert_id,
+        v2.vert_id,
+        0,
+        1,
+        ST_MakeLine(v1.geom,v2.geom)
+FROM    neighborhood_census_blocks b,
+        neighborhood_ways_net_vert v1,
+        neighborhood_ways_net_vert v2
+WHERE   b.blockid10 = v1.blockid10
+AND     v2.road_id = ANY(b.road_ids);
+
+INSERT INTO received.neighborhood_ways_net_link (
+    blockid10,source_vert,target_vert,link_cost,link_stress,geom
+)
+SELECT  b.blockid10,
+        v1.vert_id,
+        v2.vert_id,
+        0,
+        1,
+        ST_MakeLine(v1.geom,v2.geom)
+FROM    neighborhood_census_blocks b,
+        neighborhood_ways_net_vert v1,
+        neighborhood_ways_net_vert v2
+WHERE   b.blockid10 = v2.blockid10
+AND     v1.road_id = ANY(b.road_ids);
+
+-- recreate indexes
+CREATE INDEX idx_neighborhood_ways_net_link_int_id ON received.neighborhood_ways_net_link (int_id);
+CREATE INDEX idx_neighborhood_ways_net_link_src_trgt ON received.neighborhood_ways_net_link (source_vert,target_vert);
+CREATE INDEX idx_neighborhood_ways_net_link_src_rdid ON received.neighborhood_ways_net_link (source_road_id);
+CREATE INDEX idx_neighborhood_ways_net_link_tgt_rdid ON received.neighborhood_ways_net_link (target_road_id);
+CREATE INDEX idx_neighborhood_ways_net_link_blockid10 ON received.neighborhood_ways_net_link (blockid10);
+ANALYZE received.neighborhood_ways_net_link;
