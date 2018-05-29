@@ -15,8 +15,7 @@ FROM    neighborhood_ways_net_vert sv,
                     target_vert AS target,
                     link_cost AS cost
             FROM    neighborhood_ways_net_link
-            WHERE   blockid10 IS NULL
-            OR      blockid10 IN (''{source}'',''{target}'')',
+            WHERE   blockid10 IS NULL OR blockid10 IN ('''||{source}||''','''||{target}||''')',
             sv.vert_id,
             tv.vert_id
         ) route

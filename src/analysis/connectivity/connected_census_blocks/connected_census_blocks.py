@@ -13,7 +13,8 @@ db_connection_string = " ".join([
 conn = psycopg2.connect(db_connection_string)
 
 cur = conn.cursor(cursor_factory=DictCursor)
-cur.execute('select * from neighborhood_connected_census_blocks')
+cur.execute("select * from neighborhood_connected_census_blocks where source_blockid10='000000000010595'")
+# cur.execute("select * from neighborhood_connected_census_blocks")
 
 print("Retrieving census blocks")
 block_pairs = cur.fetchall()
