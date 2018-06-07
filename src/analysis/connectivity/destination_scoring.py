@@ -33,23 +33,34 @@ dests = [
     "social_services",
     "supermarkets",
     "transit",
-    "universities"
+    "universities",
+    "paths"
 ]
 
 for d in dests:
     print("processing " + d)
     print("high stress...")
-    a["destinations"] = sql.Identifier("neighborhood_" + d)
-    a["connection_true"] = sql.Identifier("high_stress")
-    a["score_attribute"] = sql.Identifier(d + "_high_stress")
+    if d == "paths":
+        a["destination_id"] = sql.Identifier("path_id")
+        a["score_attribute"] = sql.Identifier("trails_high_stress")
+        a["destinations"] = sql.Identifier("neighborhood_paths_orig")
+    else:
+        a["destination_id"] = sql.Identifier("id")
+        a["score_attribute"] = sql.Identifier(d + "_high_stress")
+        a["destinations"] = sql.Identifier("neighborhood_" + d)
+    a["connection_true"] = sql.Literal(True)
     q = sql.SQL(raw).format(**a)
     cur = conn.cursor()
     cur.execute(q)
     conn.commit()
     cur.close()
     print("low stress...")
+    if d == "paths":
+        a["score_attribute"] = sql.Identifier("trails_low_stress")
+    else:
+        a["destination_id"] = sql.Identifier("id")
+        a["score_attribute"] = sql.Identifier(d + "_low_stress")
     a["connection_true"] = sql.Identifier("low_stress")
-    a["score_attribute"] = sql.Identifier(d + "_low_stress")
     q = sql.SQL(raw).format(**a)
     cur = conn.cursor()
     cur.execute(q)

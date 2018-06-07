@@ -21,7 +21,7 @@ FROM
     {block_connections} connections,
     pg_temp.d
 WHERE
-    connections.{connection_true}
+    {connection_true}
     AND connections.{target_block} = d.block_id
 GROUP BY connections.{source_block};
 
