@@ -7,7 +7,7 @@
 --   :recreation=10
 --   :transit=15
 ----------------------------------------
-UPDATE  neighborhood_census_blocks
+UPDATE  comprehensive_data_census_blocks
 SET     overall_score = :total *
             (
                 :people * COALESCE(pop_score,0)
@@ -169,5 +169,5 @@ SET     overall_score = :total *
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(b.geom,neighborhood_census_blocks.geom)
+            WHERE   ST_Intersects(b.geom,comprehensive_data_census_blocks.geom)
         );

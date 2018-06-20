@@ -92,17 +92,17 @@ SELECT  'opportunity',
         (
             0.35
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE schools_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE schools_high_stress > 0)
                     THEN 0.35
                 ELSE 0
                 END
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE colleges_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE colleges_high_stress > 0)
                     THEN 0.1
                 ELSE 0
                 END
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE universities_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE universities_high_stress > 0)
                     THEN 0.2
                 ELSE 0
                 END
@@ -177,7 +177,7 @@ SELECT  'core_services',
         CASE
         WHEN EXISTS (
             SELECT  1
-            FROM    neighborhood_census_blocks
+            FROM    comprehensive_data_census_blocks
             WHERE   doctors_high_stress > 0
             OR      dentists_high_stress > 0
             OR      hospitals_high_stress > 0
@@ -195,32 +195,32 @@ SELECT  'core_services',
                     ) /
                     (
                         CASE
-                        WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE doctors_high_stress > 0)
+                        WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE doctors_high_stress > 0)
                             THEN 0.2
                         ELSE 0
                         END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE dentists_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE dentists_high_stress > 0)
                                 THEN 0.1
                             ELSE 0
                             END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE hospitals_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE hospitals_high_stress > 0)
                                 THEN 0.2
                             ELSE 0
                             END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE pharmacies_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE pharmacies_high_stress > 0)
                                 THEN 0.1
                             ELSE 0
                             END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE supermarkets_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE supermarkets_high_stress > 0)
                                 THEN 0.25
                             ELSE 0
                             END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE social_services_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE social_services_high_stress > 0)
                                 THEN 0.15
                             ELSE 0
                             END
@@ -277,7 +277,7 @@ SELECT  'recreation',
         CASE
         WHEN EXISTS (
             SELECT  1
-            FROM    neighborhood_census_blocks
+            FROM    comprehensive_data_census_blocks
             WHERE   parks_high_stress > 0
             OR      trails_high_stress > 0
             OR      community_centers_high_stress > 0
@@ -289,17 +289,17 @@ SELECT  'recreation',
                     ) /
                     (
                         CASE
-                        WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE parks_high_stress > 0)
+                        WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE parks_high_stress > 0)
                             THEN 0.4
                         ELSE 0
                         END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE trails_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE trails_high_stress > 0)
                                 THEN 0.35
                             ELSE 0
                             END
                         +   CASE
-                            WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE community_centers_high_stress > 0)
+                            WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE community_centers_high_stress > 0)
                                 THEN 0.25
                             ELSE 0
                             END
@@ -334,36 +334,36 @@ SELECT  'overall_score',
         (
             :people + :opportunity
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE doctors_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE doctors_high_stress > 0)
                     THEN :core_services
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE dentists_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE dentists_high_stress > 0)
                     THEN :core_services
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE hospitals_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE hospitals_high_stress > 0)
                     THEN :core_services
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE pharmacies_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE pharmacies_high_stress > 0)
                     THEN :core_services
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE supermarkets_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE supermarkets_high_stress > 0)
                     THEN :core_services
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE social_services_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE social_services_high_stress > 0)
                     THEN :core_services
                 ELSE 0
                 END
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE retail_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE retail_high_stress > 0)
                     THEN :retail
                 ELSE 0
                 END
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE parks_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE parks_high_stress > 0)
                     THEN :recreation
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE trails_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE trails_high_stress > 0)
                     THEN :recreation
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE community_centers_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE community_centers_high_stress > 0)
                     THEN :recreation
                 ELSE 0
                 END
             +   CASE
-                WHEN EXISTS (SELECT 1 FROM neighborhood_census_blocks WHERE transit_high_stress > 0)
+                WHEN EXISTS (SELECT 1 FROM comprehensive_data_census_blocks WHERE transit_high_stress > 0)
                     THEN :transit
                 ELSE 0
                 END
@@ -380,11 +380,11 @@ INSERT INTO generated.neighborhood_overall_scores (
 )
 SELECT  'population_total',
         (
-            SELECT SUM(pop10) FROM neighborhood_census_blocks
+            SELECT SUM(pop10) FROM comprehensive_data_census_blocks
             WHERE   EXISTS (
                         SELECT  1
                         FROM    neighborhood_boundary AS b
-                        WHERE   ST_Intersects(b.geom,neighborhood_census_blocks.geom)
+                        WHERE   ST_Intersects(b.geom,comprehensive_data_census_blocks.geom)
                     )
         ),
         'Total population of boundary';

@@ -1,6 +1,6 @@
 
 -- set block-based score
-UPDATE  neighborhood_census_blocks
+UPDATE  comprehensive_data_census_blocks
 SET     pharmacies_score =  CASE
                             WHEN pharmacies_high_stress IS NULL THEN NULL
                             WHEN pharmacies_high_stress = 0 THEN NULL

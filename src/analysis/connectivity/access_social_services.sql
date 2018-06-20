@@ -1,6 +1,6 @@
 
 -- set block-based score
-UPDATE  neighborhood_census_blocks
+UPDATE  comprehensive_data_census_blocks
 SET     social_services_score = CASE
                                 WHEN social_services_high_stress IS NULL THEN NULL
                                 WHEN social_services_high_stress = 0 THEN NULL

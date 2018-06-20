@@ -1,17 +1,17 @@
 import psycopg2
 from psycopg2 import sql
 
-conn = psycopg2.connect('host=192.168.30.220 dbname=anne_arundel user=gis password=gis')
+conn = psycopg2.connect('host=192.168.40.225 dbname=alameda_ctc user=gis password=gis')
 
 a = {
   "destination_id": sql.Identifier("blockid10"),
   "destination_block_ids": sql.Identifier("blockid10"),
-  "destinations": sql.Identifier("neighborhood_census_blocks"),
-  "block_connections": sql.Identifier("neighborhood_connected_census_blocks"),
+  "destinations": sql.Identifier("comprehensive_data_census_blocks"),
+  "block_connections": sql.Identifier("existing_connected_census_blocks"),
   "source_block": sql.Identifier("source_blockid10"),
   "target_block": sql.Identifier("target_blockid10"),
   "connection_true": sql.Identifier("high_stress"),
-  "blocks": sql.Identifier("neighborhood_census_blocks"),
+  "blocks": sql.Identifier("comprehensive_data_census_blocks"),
   "block_id": sql.Identifier("blockid10"),
   "score_attribute": sql.Identifier("pop_high_stress"),
   "val": sql.Identifier("pop10")
@@ -24,7 +24,7 @@ f.close()
 
 print("processing pop")
 print("high stress...")
-a["destinations"] = sql.Identifier("neighborhood_census_blocks")
+a["destinations"] = sql.Identifier("comprehensive_data_census_blocks")
 a["connection_true"] = sql.Literal(True)
 a["score_attribute"] = sql.Identifier("pop_high_stress")
 q = sql.SQL(raw).format(**a)

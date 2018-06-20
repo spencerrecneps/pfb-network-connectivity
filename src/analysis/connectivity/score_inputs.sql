@@ -71,11 +71,11 @@ SELECT  SUM(pop10),
         SUM(CASE WHEN COALESCE(trails_high_stress,0) = 0 THEN 0 ELSE pop10 END),
         SUM(CASE WHEN COALESCE(community_centers_high_stress,0) = 0 THEN 0 ELSE pop10 END),
         SUM(CASE WHEN COALESCE(transit_high_stress,0) = 0 THEN 0 ELSE pop10 END)
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -------------------------------------
@@ -95,11 +95,11 @@ SELECT  'People',
         regexp_replace('Half of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             half have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile pop access score
@@ -116,11 +116,11 @@ SELECT  'People',
         regexp_replace('30% of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             70% have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile pop access score
@@ -137,11 +137,11 @@ SELECT  'People',
         regexp_replace('70% of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             30% have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- avg pop access score
@@ -159,11 +159,11 @@ SELECT  'People',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             this ratio of low stress to high stress access.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -178,12 +178,12 @@ SELECT  'People',
         regexp_replace('On average, census blocks in the neighborhood received
             this population score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 
@@ -204,11 +204,11 @@ SELECT  'Opportunity',
         regexp_replace('Half of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             half have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile jobs access score
@@ -225,11 +225,11 @@ SELECT  'Opportunity',
         regexp_replace('30% of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             70% have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile jobs access score
@@ -246,11 +246,11 @@ SELECT  'Opportunity',
         regexp_replace('70% of all census blocks in the neighborhood have
             a ratio of low stress to high stress access above this number,
             30% have a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- avg jobs access score
@@ -268,11 +268,11 @@ SELECT  'Opportunity',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             this ratio of low stress to high stress access.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -287,12 +287,12 @@ SELECT  'Opportunity',
         regexp_replace('On average, census blocks in the neighborhood received
             this employment score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -------------------------------------
@@ -312,11 +312,11 @@ SELECT  'Opportunity',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many schools.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median schools access score
@@ -333,11 +333,11 @@ SELECT  'Opportunity',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of schools within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile schools access score
@@ -354,11 +354,11 @@ SELECT  'Opportunity',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of schools within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile schools access score
@@ -375,11 +375,11 @@ SELECT  'Opportunity',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of schools within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -394,12 +394,12 @@ SELECT  'Opportunity',
         regexp_replace('On average, census blocks in the neighborhood received
             this K12 schools score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- school pop shed average low stress access score
@@ -506,11 +506,11 @@ SELECT  'Opportunity',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many tech/vocational colleges.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median colleges access score
@@ -527,11 +527,11 @@ SELECT  'Opportunity',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of tech/vocational colleges within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile colleges access score
@@ -548,11 +548,11 @@ SELECT  'Opportunity',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of tech/vocational colleges within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile colleges access score
@@ -569,11 +569,11 @@ SELECT  'Opportunity',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of tech/vocational colleges within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -588,12 +588,12 @@ SELECT  'Opportunity',
         regexp_replace('On average, census blocks in the neighborhood received
             this tech/vocational colleges score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- college pop shed average low stress access score
@@ -706,11 +706,11 @@ SELECT  'Opportunity',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many universities.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median universities access score
@@ -727,11 +727,11 @@ SELECT  'Opportunity',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of universities within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile universities access score
@@ -748,11 +748,11 @@ SELECT  'Opportunity',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of universities within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile universities access score
@@ -769,11 +769,11 @@ SELECT  'Opportunity',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of universities within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -788,12 +788,12 @@ SELECT  'Opportunity',
         regexp_replace('On average, census blocks in the neighborhood received
             this universities score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- university pop shed average low stress access score
@@ -906,11 +906,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many doctors.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median doctors access score
@@ -927,11 +927,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of doctors within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile doctors access score
@@ -948,11 +948,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of doctors within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile doctors access score
@@ -969,11 +969,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of doctors within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -988,12 +988,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this doctors score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- doctors pop shed average low stress access score
@@ -1105,11 +1105,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many dentists.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median dentists access score
@@ -1126,11 +1126,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of dentists within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile dentists access score
@@ -1147,11 +1147,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of dentists within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile dentists access score
@@ -1168,11 +1168,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of dentists within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -1187,12 +1187,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this dentists score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- dentists pop shed average low stress access score
@@ -1304,11 +1304,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many hospitals.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median hospitals access score
@@ -1325,11 +1325,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of hospitals within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile hospitals access score
@@ -1346,11 +1346,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of hospitals within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile hospitals access score
@@ -1367,11 +1367,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of hospitals within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -1386,12 +1386,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this hospital score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- hospitals pop shed average low stress access score
@@ -1503,11 +1503,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many pharmacies.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median pharmacies access score
@@ -1524,11 +1524,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of pharmacies within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile pharmacies access score
@@ -1545,11 +1545,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of pharmacies within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile pharmacies access score
@@ -1566,11 +1566,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of pharmacies within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -1585,12 +1585,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this pharmacies score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- pharmacies pop shed average low stress access score
@@ -1702,11 +1702,11 @@ SELECT  'Retail',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many retail.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median retail access score
@@ -1723,11 +1723,11 @@ SELECT  'Retail',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of retail within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile retail access score
@@ -1744,11 +1744,11 @@ SELECT  'Retail',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of retail within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile retail access score
@@ -1765,11 +1765,11 @@ SELECT  'Retail',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of retail within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -1784,12 +1784,12 @@ SELECT  'Retail',
         regexp_replace('On average, census blocks in the neighborhood received
             this retail score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- retail pop shed average low stress access score
@@ -1901,11 +1901,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many supermarkets.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median supermarkets access score
@@ -1922,11 +1922,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of supermarkets within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile supermarkets access score
@@ -1943,11 +1943,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of supermarkets within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile supermarkets access score
@@ -1964,11 +1964,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of supermarkets within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -1983,12 +1983,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this grocery score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- supermarkets pop shed average low stress access score
@@ -2100,11 +2100,11 @@ SELECT  'Core Services',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many social services.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median social_services access score
@@ -2121,11 +2121,11 @@ SELECT  'Core Services',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of social services within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile social_services access score
@@ -2142,11 +2142,11 @@ SELECT  'Core Services',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of social services within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile social_services access score
@@ -2163,11 +2163,11 @@ SELECT  'Core Services',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of social services within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -2182,12 +2182,12 @@ SELECT  'Core Services',
         regexp_replace('On average, census blocks in the neighborhood received
             this social services score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- social_services pop shed average low stress access score
@@ -2299,11 +2299,11 @@ SELECT  'Recreation',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many parks.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median parks access score
@@ -2320,11 +2320,11 @@ SELECT  'Recreation',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of parks within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile parks access score
@@ -2341,11 +2341,11 @@ SELECT  'Recreation',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of parks within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile parks access score
@@ -2362,11 +2362,11 @@ SELECT  'Recreation',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of parks within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -2381,12 +2381,12 @@ SELECT  'Recreation',
         regexp_replace('On average, census blocks in the neighborhood received
             this parks score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- parks pop shed average low stress access score
@@ -2498,11 +2498,11 @@ SELECT  'Recreation',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many trails.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median trails access score
@@ -2519,11 +2519,11 @@ SELECT  'Recreation',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of trails within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile trails access score
@@ -2540,11 +2540,11 @@ SELECT  'Recreation',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of trails within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile trails access score
@@ -2561,11 +2561,11 @@ SELECT  'Recreation',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of trails within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -2580,12 +2580,12 @@ SELECT  'Recreation',
         regexp_replace('On average, census blocks in the neighborhood received
             this trails score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 -------------------------------------
 -- community_centers
@@ -2604,11 +2604,11 @@ SELECT  'Recreation',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many community centers.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median community centers access score
@@ -2625,11 +2625,11 @@ SELECT  'Recreation',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of community centers within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile community centers access score
@@ -2646,11 +2646,11 @@ SELECT  'Recreation',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of community centers within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile community centers access score
@@ -2667,11 +2667,11 @@ SELECT  'Recreation',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of community centers within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -2686,12 +2686,12 @@ SELECT  'Recreation',
         regexp_replace('On average, census blocks in the neighborhood received
             this community centers score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- community centers pop shed average low stress access score
@@ -2803,11 +2803,11 @@ SELECT  'Transit',
             neighborhood','\n\s+',' ','g'),
         regexp_replace('On average, census blocks in the neighborhood have
             low stress access to this many transit stations.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- median transit access score
@@ -2824,11 +2824,11 @@ SELECT  'Transit',
         regexp_replace('Half of census blocks in this neighborhood
             have low stress access to a higher ratio of transit stations within
             biking distance, half have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 70th percentile transit access score
@@ -2845,11 +2845,11 @@ SELECT  'Transit',
         regexp_replace('30% of census blocks in this neighborhood
             have low stress access to a higher ratio of transit stations within
             biking distance, 70% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- 30th percentile transit access score
@@ -2866,11 +2866,11 @@ SELECT  'Transit',
         regexp_replace('70% of census blocks in this neighborhood
             have low stress access to a higher ratio of transit stations within
             biking distance, 30% have access to a lower ratio.','\n\s+',' ','g')
-FROM    neighborhood_census_blocks
+FROM    comprehensive_data_census_blocks
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- population weighted census block score
@@ -2885,12 +2885,12 @@ SELECT  'Transit',
         regexp_replace('On average, census blocks in the neighborhood received
             this transit score.','\n\s+',' ','g'),
         True
-FROM    neighborhood_census_blocks,
+FROM    comprehensive_data_census_blocks,
         tmp_pop
 WHERE   EXISTS (
             SELECT  1
             FROM    neighborhood_boundary AS b
-            WHERE   ST_Intersects(neighborhood_census_blocks.geom,b.geom)
+            WHERE   ST_Intersects(comprehensive_data_census_blocks.geom,b.geom)
         );
 
 -- transit pop shed average low stress access score
